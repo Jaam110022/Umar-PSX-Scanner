@@ -1,4 +1,4 @@
-name: Umar PSX Scanner Build
+name: Android Build
 
 on:
   workflow_dispatch:
@@ -22,20 +22,14 @@ jobs:
         with:
           flutter-version: '3.22.0'
 
-      # 🟡 اگر آپ کا Flutter project فولڈر کے اندر ہے (مثلاً "app" یا "UmarPSXScanner")
-      # تو اس لائن میں وہ فولڈر کا نام لکھیں
-      - name: Get Flutter dependencies
-        run: |
-          cd UmarPsxScanner || cd app || echo "Using root folder"
-          flutter pub get
+      - name: Get dependencies
+        run: flutter pub get
 
       - name: Build release APK
-        run: |
-          cd UmarPsxScanner || cd app || echo "Using root folder"
-          flutter build apk --release
+        run: flutter build apk --release
 
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
           name: Umar_PSX_Scanner
-          path: '**/app-release.apk'
+          path: build/app/outputs/flutter-apk/app-release.apk
